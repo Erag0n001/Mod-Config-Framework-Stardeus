@@ -1,0 +1,9 @@
+{
+    "Id" : "Eragon.ModConfig",
+    "SteamWorkshop" : false,
+    "Name" : "Mod Config Framework",
+    "Description" : "Framework to add configs to a mod.",
+    "ModVersion" : "1.0.0",
+    "GameVersion" : "0.12.6",
+    "Dependencies" : [ "Core" ]
+}
