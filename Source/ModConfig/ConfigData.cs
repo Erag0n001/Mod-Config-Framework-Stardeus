@@ -16,13 +16,23 @@ namespace ModConfig
     public abstract class ConfigData
     {
         protected ConfigData() {}
-
+        private static bool PrintedErrorMessage;
         public static ConfigData LoadConfig(string modId) 
         {
-            ModInfo info = The.ModLoader.ModInfos.Values.Where(x => x.Id == modId).FirstOrDefault();
+            ModInfo info = The.ModLoader.ModInfos.Values.Where(x => x.Id.Substring(0, x.Id.LastIndexOf("_") != -1 ? x.Id.LastIndexOf("_"): x.Id.Length) == modId).FirstOrDefault();
             if (info == null)
             {
                 Printer.Error($"Failed to find mod with id {modId}");
+                if (!PrintedErrorMessage)
+                {
+                    string message = $"Current mods loaded:";
+                    foreach(ModInfo mod in The.ModLoader.ModInfos.Values) 
+                    {
+                        message += $"\n{mod.Id}";
+                    }
+                    Printer.Warn(message);
+                }
+                return null;
             }
             return LoadConfig(info);
         }
