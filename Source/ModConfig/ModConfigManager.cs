@@ -46,6 +46,10 @@ namespace ModConfig
             }
         }
 
+        public static void SaveConfigFromMod(ConfigData data) 
+        {
+
+        }
         public static void GetConfigFromMod(Assembly assembly, ModInfo mod) 
         {
             try

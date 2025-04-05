@@ -15,28 +15,34 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ModConfig.Patches
 {
-    [HarmonyPatch(typeof(MainMenu), "BuildMainMenu")]
+    [HarmonyPatch(typeof(MainMenu), "ShowMainMenu")]
     public static class MainMenuPatch
     {
         public static FieldInfo currentButtons;
         private static MethodInfo CreateButton;
         private static MethodInfo ShowMainMenu;
+        private static bool patching;
         static MainMenuPatch()
         {
             currentButtons = AccessTools.Field(typeof(MainMenu), "currentButtons");
             CreateButton = AccessTools.Method(typeof(MainMenu), "CreateButton");
             ShowMainMenu = AccessTools.Method(typeof(MainMenu), "ShowMainMenu");
+            
         }
 
         [HarmonyPostfix]
         public static void Postfix(MainMenu __instance)
         {
+            if (patching)
+                return;
             Printer.Warn("Patching main menu");
             List<MainMenuButton> buttons = (List<MainMenuButton>)currentButtons.GetValue(__instance);
             if (buttons == null)
                 return;
             buttons.Insert(5, CreateConfigButton(__instance));
+            patching = true;
             ShowMainMenu.Invoke(__instance, null);
+            patching = false;
         }
 
         private static MainMenuButton CreateConfigButton(MainMenu __instance)
@@ -66,23 +72,6 @@ namespace ModConfig.Patches
         private static void CreatePanelFromConfig(Type config) 
         {
             The.SysSig.ShowPanel.Send(new PanelDescriptor(config, withCloseButton: true, skipInGame: true));
-        }
-    }
-
-    [HarmonyPatch(typeof(MainMenu), "Update")]
-    public static class MainMenuUpdatePatch 
-    {
-        public static bool wasPatched = false;
-        [HarmonyPostfix]
-        public static void Postfix(MainMenu __instance)
-        {
-            if (wasPatched)
-                return;
-            List<MainMenuButton> buttons = (List<MainMenuButton>)MainMenuPatch.currentButtons.GetValue(__instance);
-            if (buttons == null)
-                return;
-            MainMenuPatch.Postfix(__instance);
-            wasPatched = true;
         }
     }
 }
