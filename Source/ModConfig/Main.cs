@@ -14,6 +14,8 @@ using Game.Data;
 using Game.Mods;
 using System.IO;
 using MessagePack;
+using UnityEngine.SceneManagement;
+using ModConfig.Patches;
 namespace ModConfig
 {
     public static class Main
@@ -28,6 +30,7 @@ namespace ModConfig
         {
             CheckDirectories();
             LoadHarmony();
+            SetupListeners();
             Printer.Warn("Loaded Mod Configs");
         }
 
@@ -43,6 +46,17 @@ namespace ModConfig
             {
                 Directory.CreateDirectory(ModConfigManager.PathForModConfig);
             }
+        }
+
+        static void SetupListeners() 
+        {
+            SceneManager.activeSceneChanged += ListenForSceneChange;
+        }
+
+        static void ListenForSceneChange(Scene before, Scene after) 
+        {
+            if (after.name == "MainMenu")
+                MainMenuPatch.Patched = false;
         }
     }
 }

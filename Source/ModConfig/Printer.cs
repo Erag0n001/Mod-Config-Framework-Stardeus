@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ModConfig.Misc
 {
-    public static class Printer
+    internal static class Printer
     {
         public enum Verbose { Normal, StackTrace, FullDebug }
         private static readonly string LogMessage = "[MC]> ";

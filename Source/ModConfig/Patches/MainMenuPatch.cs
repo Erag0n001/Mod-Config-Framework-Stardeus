@@ -21,7 +21,7 @@ namespace ModConfig.Patches
         public static FieldInfo currentButtons;
         private static MethodInfo CreateButton;
         private static MethodInfo ShowMainMenu;
-        private static bool patching;
+        public static bool Patched;
         static MainMenuPatch()
         {
             currentButtons = AccessTools.Field(typeof(MainMenu), "currentButtons");
@@ -33,16 +33,15 @@ namespace ModConfig.Patches
         [HarmonyPostfix]
         public static void Postfix(MainMenu __instance)
         {
-            if (patching)
+            if (Patched)
                 return;
             Printer.Warn("Patching main menu");
             List<MainMenuButton> buttons = (List<MainMenuButton>)currentButtons.GetValue(__instance);
             if (buttons == null)
                 return;
             buttons.Insert(5, CreateConfigButton(__instance));
-            patching = true;
+            Patched = true;
             ShowMainMenu.Invoke(__instance, null);
-            patching = false;
         }
 
         private static MainMenuButton CreateConfigButton(MainMenu __instance)
