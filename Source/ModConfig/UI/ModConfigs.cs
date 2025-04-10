@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Game.Data;
 using Game.UI;
+using ModConfig.Misc;
 using ModConfig.Patches;
 using UnityEngine;
 
@@ -23,7 +24,15 @@ namespace ModConfig.UI
 
         public virtual void OnSave() 
         {
-            ModConfigManager.SaveConfigFromMod(this);
+            Printer.Warn($"Saving {this.GetType()}");
+            try
+            {
+                ModConfigManager.SaveConfigFromMod(this);
+            }
+            catch (Exception e)
+            {
+                Printer.Error($"Error while trying to save {this.GetType()}\n{e}");
+            }
         }
         public abstract void DoWindowContent();
 

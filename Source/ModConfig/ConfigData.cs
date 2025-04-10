@@ -31,6 +31,7 @@ namespace ModConfig
                         message += $"\n{mod.Id}";
                     }
                     Printer.Warn(message);
+                    PrintedErrorMessage = true;
                 }
                 return null;
             }
