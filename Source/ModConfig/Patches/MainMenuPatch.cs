@@ -46,7 +46,7 @@ namespace ModConfig.Patches
 
         private static MainMenuButton CreateConfigButton(MainMenu __instance)
         {
-            MainMenuButton button = (MainMenuButton)CreateButton.Invoke(__instance, new object[] { "Mod configs", null, null });
+            MainMenuButton button = (MainMenuButton)CreateButton.Invoke(__instance, new object[] { Translations.MainMenuButton, null, null });
             foreach (KeyValuePair<ModInfo, Type> config in Main.ModConfigsTypes)
             {
                 button.AddSubmenuItem(CreateConfigSubMenu(__instance, config.Key, config.Value));

@@ -3,7 +3,7 @@
     "SteamWorkshop" : true,
     "Name" : "Mod Config Framework",
     "Description" : "Framework to add configs to a mod.",
-    "ModVersion" : "1.0.0",
-    "GameVersion" : "0.12.6",
+    "ModVersion" : "1.0.1",
+    "GameVersion" : "0.13.0",
     "Dependencies" : [ "Core" ]
 }

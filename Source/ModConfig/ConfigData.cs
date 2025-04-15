@@ -42,7 +42,7 @@ namespace ModConfig
         {
             if (!Main.ConfigDataTypes.ContainsKey(info))
             {
-                Printer.Error($"Tried loading mod {info.Id}'s config, but it does not have any.");
+                Printer.Error($"Tried loading mod {info.Id}'s config, but it does not have any config types.");
                 return null;
             }
 

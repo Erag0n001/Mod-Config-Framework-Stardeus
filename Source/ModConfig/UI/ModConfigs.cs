@@ -13,10 +13,6 @@ namespace ModConfig.UI
 {
     public abstract class ModConfigs : MonoBehaviour, IUIPanel
     {
-        private void Awake() 
-        {
-
-        }
         private void Start() 
         {
             DoWindowContent();
